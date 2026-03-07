@@ -1,0 +1,179 @@
+{
+  "name": "promptmind",
+
+  "displayName": "PromptMind",
+  "description": "AI-powered prompt classification and template expansion for Copilot Chat. Type natural phrases to auto-generate optimized prompts.",
+  "version": "0.1.0",
+  "publisher": "promptmind",
+  "license": "SEE LICENSE IN LICENSE",
+  "icon": "assets/promptmindicon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/promptmind/promptmind-intent-detection"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI"
+  ],
+  "keywords": [
+    "copilot",
+    "chat",
+    "ai",
+    "prompt",
+    "template",
+    "classification",
+    "debugging",
+    "testing",
+    "refactoring"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "promptmind.classifyPrompt",
+        "title": "PromptMind: Classify & Expand Prompt",
+        "category": "PromptMind"
+      },
+      {
+        "command": "promptmind.generateRefactorPrompt",
+        "title": "PromptMind: Generate Refactor Prompt",
+        "category": "PromptMind"
+      },
+      {
+        "command": "promptmind.generateExplanationPrompt",
+        "title": "PromptMind: Generate Explanation Prompt",
+        "category": "PromptMind"
+      },
+      {
+        "command": "promptmind.generateCodePrompt",
+        "title": "PromptMind: Generate Code Prompt",
+        "category": "PromptMind"
+      },
+      {
+        "command": "promptmind.showUI",
+        "title": "PromptMind: Open UI Panel",
+        "category": "PromptMind",
+        "icon": "assets/promptmindicon.png"
+      },
+      {
+        "command": "promptmind.showUsageStats",
+        "title": "PromptMind: Show Usage Statistics",
+        "category": "PromptMind"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "promptmind.classifyPrompt"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "promptmind.classifyPrompt",
+          "group": "promptmind",
+          "title": "PromptMind: Classify Selection",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "promptmind.generateRefactorPrompt",
+          "group": "promptmind",
+          "when": "editorTextFocus && editorHasSelection"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "promptmind",
+          "title": "PromptMind",
+          "icon": "$(sparkle)"
+        }
+      ]
+    },
+    "views": {
+      "promptmind": [
+        {
+          "id": "promptmindView",
+          "name": "Prompt Builder",
+          "type": "webview"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "PromptMind Intent Detection",
+      "properties": {
+        "promptmind.enableAnalytics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable tracking of template usage and acceptance rates"
+        },
+        "promptmind.defaultLanguage": {
+          "type": "string",
+          "default": "javascript",
+          "description": "Default programming language for code generation templates"
+        },
+        "promptmind.autoInsertSelection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically insert selected text into prompts"
+        },
+        "promptmind.codeGenerationTemplate": {
+          "type": "string",
+          "default": "Create [language] function for [description]. Examples: [2 inline cases]. Match style of #file.",
+          "description": "Template for code generation prompts"
+        },
+        "promptmind.debugTemplate": {
+          "type": "string",
+          "default": "/fix Explain why #selection fails. Show stack trace analysis and 2 fixes with pros/cons.",
+          "description": "Template for debug prompts"
+        },
+        "promptmind.testTemplate": {
+          "type": "string",
+          "default": "Generate unit tests for #function covering edge cases, mocks, async. Use xUnit style.",
+          "description": "Template for test generation prompts"
+        },
+        "promptmind.refactorTemplate": {
+          "type": "string",
+          "default": "Refactor #selection for better performance. Use async patterns from #file. Include 3 examples.",
+          "description": "Template for refactor prompts"
+        },
+        "promptmind.explanationTemplate": {
+          "type": "string",
+          "default": "Break down #selection line-by-line. Explain complexity, alternatives, and best practices.",
+          "description": "Template for explanation prompts"
+        },
+        "promptmind.docsTemplate": {
+          "type": "string",
+          "default": "Generate comprehensive documentation for #selection. Include examples, edge cases, and usage patterns.",
+          "description": "Template for documentation prompts"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --target=es2020 --format=cjs",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "compile": "npm run esbuild",
+    "watch": "npm run esbuild-watch",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "esbuild": "^0.19.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {}
+}
