@@ -1,5 +1,7 @@
 # PromptMind
 
+## https://open-vsx.org/extension/promptmind/promptmind
+
 ## Better prompts → Better Copilot responses → Faster development
 
 AI-powered VS Code extension that classifies natural language prompts and auto-generates optimized Copilot Chat prompts using proven prompt-engineering best practices.
